@@ -9,3 +9,9 @@ services:
     command: php -S 0.0.0.0:80
     ports:
       - "80:80"
+
+  composer:
+    image: composer
+    command: composer install
+    volumes:
+      - ".:/src"
