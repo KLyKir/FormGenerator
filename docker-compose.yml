@@ -1,0 +1,11 @@
+version: '3.1'
+
+services:
+  php:
+    build:
+      context: ./docker/php
+    volumes:
+      - ".:/var/www/html"
+    command: php -S 0.0.0.0:80
+    ports:
+      - "80:80"
