@@ -4,27 +4,15 @@ namespace src;
 
 class FormGenerator
 {
-    public function __construct($formArr = []){
+    public function __construct($form = ""){
+        $this->form = $form;
+
+    }
+
+    public function createForm($formArr): string
+    {
         $this->form = "<form>";
         foreach($formArr as $val) {
-            if($val['element'] == 'text'){
-                $element = new text($val['id'], $val['Name']);
-            }
-            if($val['element'] == 'checkbox'){
-                $element = new checkbox($val['id'], $val['Name']);
-            }
-            if($val['element'] == 'button'){
-                $element = new button($val['id'], $val['Name']);
-            }
-            if($val['element'] == 'input'){
-                $element = new input($val['id'], $val['Name']);
-            }
-            if($val['element'] == 'radiobutton'){
-                $element = new radiobutton($val['id'], $val['Name']);
-            }
-            if($val['element'] == 'submit'){
-                $element = new submit($val['id'], $val['Name']);
-            }
             if($val['element'] == 'select') {
                 $optArr = array();
                 foreach ($val['optionArr'] as $option){
@@ -33,14 +21,13 @@ class FormGenerator
                 }
                 $element = new select($val['id'], $val['Name'], $optArr);
             }
+            else{
+                $className = 'src\\' . $val['element'];
+                $element = new $className($val['id'], $val['Name']);
+            }
             $this->form .= $element->render();
         }
         $this->form .= "</form>";
-
-    }
-
-    public function getForm(): string
-    {
         return $this->form;
     }
 }
